@@ -1,43 +1,15 @@
 /**
  * Animations Module — GSAP + ScrollTrigger
  * ------------------------------------------
- * Premium scroll-driven animations matching the tajmirul.site feel:
+ * Premium scroll-driven animations matching the tajmirul.site feel.
  *
- *  HERO
- *   • Title lines slide up from below with heavy easing (power4.out)
- *   • Bio text fades up after title settles
- *   • CTA button fades up with a subtle elastic bounce
- *   • Stats counter numbers animate from 0 → target with an odometer feel
- *   • Stats fade in from the right with stagger
+ * KEY BEHAVIOR:
+ *  • Scroll DOWN → animations play forward (elements reveal)
+ *  • Scroll UP   → animations play in REVERSE (elements hide back)
+ *  • Achieved via `toggleActions: 'play reverse play reverse'`
  *
- *  ABOUT
- *   • Large quote — word-by-word stagger reveal on scroll
- *   • Divider line grows from left to right
- *   • "Hi, I'm Ahmed" heading slides up
- *   • Description paragraphs stagger up
- *
- *  TECH STACK
- *   • Section title slides up on scroll
- *   • Grid items stagger-fade with a cascading wave
- *
- *  EXPERIENCE
- *   • Section title slides up
- *   • Each row slides in from the left with stagger
- *
- *  PROJECTS
- *   • Section title slides up
- *   • Each project row rises up with stagger, earns `.revealed` class
- *     so the CSS dim-on-hover effect takes over properly
- *
- *  CONTACT
- *   • Subtitle fades up
- *   • Email scales in with a focal zoom
- *
- * All triggers use `start: 'top 85%'` (element's top enters 85% viewport)
- * to fire slightly early — feels snappy but not premature.
- *
- * `once: true` on all ScrollTriggers so animations play once and don't
- * replay on scroll-back — keeps it classy.
+ *  HERO — plays on page load (no scroll trigger, no reverse)
+ *  ALL OTHER SECTIONS — reverse on scroll-back
  */
 
 import gsap from 'gsap';
@@ -50,6 +22,13 @@ const EASE_SMOOTH = 'power3.out';
 const EASE_HEAVY = 'power4.out';
 const EASE_ELASTIC = 'back.out(1.4)';
 
+// Shared ScrollTrigger config for reversible animations
+const SCROLL_DEFAULTS = {
+  start: 'top 85%',
+  end: 'top 20%',
+  toggleActions: 'play reverse play reverse',
+};
+
 export function initAnimations() {
   heroAnimations();
   aboutAnimations();
@@ -61,13 +40,12 @@ export function initAnimations() {
 
 
 /* ═══════════════════════════════════════════════════════
-   HERO — on page load (no ScrollTrigger)
+   HERO — on page load (no reverse — always visible at top)
    ═══════════════════════════════════════════════════════ */
 
 function heroAnimations() {
   const tl = gsap.timeline({ defaults: { ease: EASE_HEAVY } });
 
-  // 1. Title lines — dramatic slide-up reveal
   const titleLines = document.querySelectorAll('.hero__title-line');
   tl.to(titleLines, {
     y: 0,
@@ -76,7 +54,6 @@ function heroAnimations() {
     stagger: 0.18,
   }, 0.3);
 
-  // 2. Bio paragraph — fade up after title
   tl.to('.hero__bio', {
     y: 0,
     opacity: 1,
@@ -84,7 +61,6 @@ function heroAnimations() {
     ease: EASE_SMOOTH,
   }, 0.9);
 
-  // 3. CTA button — pop in with subtle overshoot
   tl.to('.hero__cta', {
     y: 0,
     opacity: 1,
@@ -92,7 +68,6 @@ function heroAnimations() {
     ease: EASE_ELASTIC,
   }, 1.1);
 
-  // 4. Stats — slide in from right with stagger
   const stats = document.querySelectorAll('.hero__stat');
   tl.to(stats, {
     x: 0,
@@ -102,12 +77,11 @@ function heroAnimations() {
     ease: EASE_SMOOTH,
   }, 1.0);
 
-  // 5. Animated number counters (odometer effect)
+  // Animated number counters (odometer effect)
   const counters = document.querySelectorAll('.hero__stat-number[data-count]');
   counters.forEach((counter) => {
     const target = parseInt(counter.dataset.count, 10);
     const obj = { val: 0 };
-
     tl.to(obj, {
       val: target,
       duration: 2,
@@ -121,14 +95,13 @@ function heroAnimations() {
 
 
 /* ═══════════════════════════════════════════════════════
-   ABOUT — scroll-triggered
+   ABOUT — reversible scroll animations
    ═══════════════════════════════════════════════════════ */
 
 function aboutAnimations() {
-  // Quote — dramatic word-by-word stagger reveal
+  // Quote — word-by-word stagger (reversible timeline)
   const quoteParagraph = document.querySelector('.about__quote p');
   if (quoteParagraph) {
-    // Split text into individual word spans for staggered animation
     const text = quoteParagraph.textContent.trim();
     const words = text.split(/\s+/);
     quoteParagraph.innerHTML = words
@@ -137,33 +110,26 @@ function aboutAnimations() {
 
     const wordSpans = quoteParagraph.querySelectorAll('.word');
 
-    gsap.to(wordSpans, {
-      y: 0,
-      opacity: 1,
-      duration: 0.5,
-      stagger: 0.035,
-      ease: EASE_SMOOTH,
+    const quoteTl = gsap.timeline({
       scrollTrigger: {
         trigger: '.about__quote',
         start: 'top 82%',
-        once: true,
+        end: 'top 15%',
+        toggleActions: 'play reverse play reverse',
       },
     });
 
-    // Also reveal the container that starts opacity:0
-    gsap.to(quoteParagraph, {
-      opacity: 1,
+    quoteTl.set(quoteParagraph, { opacity: 1, y: 0 });
+    quoteTl.to(wordSpans, {
       y: 0,
-      duration: 0.01,  // instant — the words handle the pretty part
-      scrollTrigger: {
-        trigger: '.about__quote',
-        start: 'top 82%',
-        once: true,
-      },
+      opacity: 1,
+      duration: 0.4,
+      stagger: 0.03,
+      ease: EASE_SMOOTH,
     });
   }
 
-  // Divider line — grow from left
+  // Divider line — grow from left (reversible)
   const dividerLine = document.querySelector('.about__divider-line');
   if (dividerLine) {
     gsap.fromTo(dividerLine,
@@ -174,14 +140,13 @@ function aboutAnimations() {
         ease: EASE_SMOOTH,
         scrollTrigger: {
           trigger: '.about__divider',
-          start: 'top 85%',
-          once: true,
+          ...SCROLL_DEFAULTS,
         },
       }
     );
   }
 
-  // "Hi, I'm Ahmed" heading
+  // "Hi, I'm Ahmed" heading (reversible)
   const aboutHeading = document.querySelector('.about__heading h2');
   if (aboutHeading) {
     gsap.to(aboutHeading, {
@@ -191,37 +156,36 @@ function aboutAnimations() {
       ease: EASE_SMOOTH,
       scrollTrigger: {
         trigger: '.about__content',
-        start: 'top 85%',
-        once: true,
+        ...SCROLL_DEFAULTS,
       },
     });
   }
 
-  // Description paragraphs — stagger
+  // Description paragraphs (reversible)
   const descParagraphs = document.querySelectorAll('.about__description p');
   if (descParagraphs.length) {
-    gsap.to(descParagraphs, {
+    const descTl = gsap.timeline({
+      scrollTrigger: {
+        trigger: '.about__description',
+        ...SCROLL_DEFAULTS,
+      },
+    });
+    descTl.to(descParagraphs, {
       y: 0,
       opacity: 1,
       duration: 0.8,
       stagger: 0.2,
       ease: EASE_SMOOTH,
-      scrollTrigger: {
-        trigger: '.about__description',
-        start: 'top 85%',
-        once: true,
-      },
     });
   }
 }
 
 
 /* ═══════════════════════════════════════════════════════
-   TECH STACK — scroll-triggered
+   TECH STACK — reversible
    ═══════════════════════════════════════════════════════ */
 
 function stackAnimations() {
-  // Section title
   const stackTitle = document.querySelector('.stack__title');
   if (stackTitle) {
     gsap.to(stackTitle, {
@@ -232,39 +196,36 @@ function stackAnimations() {
       scrollTrigger: {
         trigger: stackTitle,
         start: 'top 88%',
-        once: true,
+        end: 'top 20%',
+        toggleActions: 'play reverse play reverse',
       },
     });
   }
 
-  // Grid items — cascading wave stagger
   const stackItems = document.querySelectorAll('.stack__item:not(.stack__item--hidden)');
   if (stackItems.length) {
-    gsap.to(stackItems, {
+    const stackTl = gsap.timeline({
+      scrollTrigger: {
+        trigger: '.stack__grid',
+        ...SCROLL_DEFAULTS,
+      },
+    });
+    stackTl.to(stackItems, {
       y: 0,
       opacity: 1,
       duration: 0.5,
-      stagger: {
-        each: 0.07,
-        from: 'start',
-      },
+      stagger: { each: 0.06, from: 'start' },
       ease: EASE_SMOOTH,
-      scrollTrigger: {
-        trigger: '.stack__grid',
-        start: 'top 85%',
-        once: true,
-      },
     });
   }
 }
 
 
 /* ═══════════════════════════════════════════════════════
-   EXPERIENCE — scroll-triggered
+   EXPERIENCE — reversible
    ═══════════════════════════════════════════════════════ */
 
 function experienceAnimations() {
-  // Section title
   const expTitle = document.querySelector('.experience__title');
   if (expTitle) {
     gsap.to(expTitle, {
@@ -275,24 +236,25 @@ function experienceAnimations() {
       scrollTrigger: {
         trigger: expTitle,
         start: 'top 88%',
-        once: true,
+        end: 'top 20%',
+        toggleActions: 'play reverse play reverse',
       },
     });
   }
 
-  // Each experience row — slide from left with stagger
   const expItems = document.querySelectorAll('.experience__item');
   expItems.forEach((item, i) => {
     gsap.to(item, {
       x: 0,
       opacity: 1,
       duration: 0.8,
-      delay: i * 0.12,
+      delay: i * 0.1,
       ease: EASE_SMOOTH,
       scrollTrigger: {
         trigger: item,
         start: 'top 88%',
-        once: true,
+        end: 'top 20%',
+        toggleActions: 'play reverse play reverse',
       },
     });
   });
@@ -300,11 +262,10 @@ function experienceAnimations() {
 
 
 /* ═══════════════════════════════════════════════════════
-   PROJECTS — scroll-triggered
+   PROJECTS — reversible (manages .revealed class)
    ═══════════════════════════════════════════════════════ */
 
 function projectAnimations() {
-  // Section title
   const projTitle = document.querySelector('.projects__title');
   if (projTitle) {
     gsap.to(projTitle, {
@@ -315,28 +276,28 @@ function projectAnimations() {
       scrollTrigger: {
         trigger: projTitle,
         start: 'top 88%',
-        once: true,
+        end: 'top 20%',
+        toggleActions: 'play reverse play reverse',
       },
     });
   }
 
-  // Each project row — rise up + earn `.revealed` class for CSS hover effect
   const projectItems = document.querySelectorAll('.projects__item');
   projectItems.forEach((item, i) => {
     gsap.to(item, {
       y: 0,
       opacity: 1,
       duration: 0.7,
-      delay: i * 0.1,
+      delay: i * 0.08,
       ease: EASE_SMOOTH,
       scrollTrigger: {
         trigger: item,
         start: 'top 90%',
-        once: true,
-      },
-      onComplete() {
-        // Hand control to CSS for the hover-dim interaction
-        item.classList.add('revealed');
+        end: 'top 15%',
+        toggleActions: 'play reverse play reverse',
+        onEnter: () => item.classList.add('revealed'),
+        onLeaveBack: () => item.classList.remove('revealed'),
+        onEnterBack: () => item.classList.add('revealed'),
       },
     });
   });
@@ -344,11 +305,10 @@ function projectAnimations() {
 
 
 /* ═══════════════════════════════════════════════════════
-   CONTACT — scroll-triggered
+   CONTACT — reversible
    ═══════════════════════════════════════════════════════ */
 
 function contactAnimations() {
-  // Subtitle — fade up
   const subtitle = document.querySelector('.contact__subtitle');
   if (subtitle) {
     gsap.to(subtitle, {
@@ -359,12 +319,12 @@ function contactAnimations() {
       scrollTrigger: {
         trigger: subtitle,
         start: 'top 88%',
-        once: true,
+        end: 'top 20%',
+        toggleActions: 'play reverse play reverse',
       },
     });
   }
 
-  // Email — scale-in zoom effect
   const email = document.querySelector('.contact__email');
   if (email) {
     gsap.to(email, {
@@ -375,7 +335,8 @@ function contactAnimations() {
       scrollTrigger: {
         trigger: email,
         start: 'top 90%',
-        once: true,
+        end: 'top 20%',
+        toggleActions: 'play reverse play reverse',
       },
     });
   }

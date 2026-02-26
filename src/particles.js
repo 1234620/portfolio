@@ -1,21 +1,22 @@
 /**
- * Particles Background Module
- * ----------------------------
- * Atmospheric star-field behind all content, matching tajmirul.site's
- * subtle floating dots. Uses tsParticles with the slim bundle to keep
- * the page lightweight.
+ * Particles Background Module — Continuous Snowfall
+ * ---------------------------------------------------
+ * Atmospheric snowfall effect matching tajmirul.site's background.
+ * Particles drift downward continuously, with gentle horizontal wobble
+ * and varying sizes/opacities to simulate depth.
  *
- * Key choices:
- *  • No links between particles — keeps it clean and minimal
- *  • Very slow drift speed for a calm, ambient feel
- *  • Particles gently pulse opacity for a "breathing" effect
- *  • Responsive density — fewer particles on mobile to save GPU
- *  • Slight mouse repulse so particles feel alive without being distracting
+ * Key design choices:
+ *  • Direction: bottom — particles fall like snow
+ *  • Varying size (1–4px) simulates near/far flakes
+ *  • Gentle opacity pulse for a shimmering depth effect
+ *  • Horizontal wobble via tilt + slight random drift
+ *  • No connecting lines — clean and minimal
+ *  • Subtle mouse repulse so flakes part around cursor
+ *  • Responsive: fewer particles on mobile
  */
 
 export async function initParticles() {
   try {
-    // Dynamic imports to avoid blocking page render
     const { tsParticles } = await import('tsparticles');
     const { loadSlim } = await import('@tsparticles/slim');
 
@@ -24,7 +25,7 @@ export async function initParticles() {
     await tsParticles.load({
       id: 'particles-bg',
       options: {
-        fullScreen: false,           // we position via CSS (#particles-bg is fixed)
+        fullScreen: false,
 
         background: {
           color: 'transparent',
@@ -35,10 +36,10 @@ export async function initParticles() {
 
         particles: {
           number: {
-            value: 90,
+            value: 120,
             density: {
               enable: true,
-              area: 1000,
+              area: 900,
             },
           },
 
@@ -51,42 +52,65 @@ export async function initParticles() {
           },
 
           opacity: {
-            value: { min: 0.05, max: 0.35 },
+            value: { min: 0.1, max: 0.6 },
             animation: {
               enable: true,
-              speed: 0.4,
-              minimumValue: 0.03,
+              speed: 0.5,
+              minimumValue: 0.05,
               sync: false,
             },
           },
 
           size: {
-            value: { min: 0.6, max: 2.2 },
+            value: { min: 1, max: 4 },
             animation: {
               enable: true,
-              speed: 1,
-              minimumValue: 0.3,
+              speed: 1.5,
+              minimumValue: 0.5,
               sync: false,
             },
           },
 
           move: {
             enable: true,
-            speed: 0.3,
-            direction: 'none',
-            random: true,
+            speed: { min: 0.5, max: 1.8 },
+            direction: 'bottom',
+            random: false,
             straight: false,
             outModes: {
               default: 'out',
+              bottom: 'out',
+              top: 'out',
+              left: 'out',
+              right: 'out',
             },
-            // Tiny random wobble for organic feel
+            // Horizontal wobble — makes it feel like real snow
+            drift: { min: -0.5, max: 0.5 },
             attract: {
               enable: false,
             },
           },
 
+          // Gentle tilt/rotation for organic snowflake tumble
+          rotate: {
+            value: { min: 0, max: 360 },
+            direction: 'random',
+            animation: {
+              enable: true,
+              speed: 3,
+              sync: false,
+            },
+          },
+
+          // Slight wobble on the path
+          wobble: {
+            enable: true,
+            distance: 8,
+            speed: 4,
+          },
+
           links: {
-            enable: false,            // no connecting lines — matches tajmirul style
+            enable: false,
           },
         },
 
@@ -95,7 +119,7 @@ export async function initParticles() {
           events: {
             onHover: {
               enable: true,
-              mode: 'grab',           // subtle pull toward cursor
+              mode: 'repulse',
             },
             onClick: {
               enable: false,
@@ -105,28 +129,26 @@ export async function initParticles() {
             },
           },
           modes: {
-            grab: {
-              distance: 140,
-              links: {
-                opacity: 0.08,
-                color: '#6366f1',      // accent-colored grab lines
-              },
+            repulse: {
+              distance: 100,
+              duration: 0.4,
+              speed: 0.5,
             },
           },
         },
 
-        // Responsive overrides — fewer particles on smaller screens
         responsive: [
           {
             maxWidth: 768,
             options: {
               particles: {
-                number: { value: 40 },
-                move: { speed: 0.2 },
+                number: { value: 50 },
+                move: { speed: { min: 0.3, max: 1 } },
+                size: { value: { min: 0.8, max: 2.5 } },
               },
               interactivity: {
                 events: {
-                  onHover: { enable: false },  // no hover on touch devices
+                  onHover: { enable: false },
                 },
               },
             },
@@ -135,7 +157,6 @@ export async function initParticles() {
       },
     });
   } catch (err) {
-    // Particles are non-critical — log and carry on
     console.warn('[particles] Failed to initialize:', err);
   }
 }
