@@ -1,0 +1,358 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Ahmed Moosani — AI Undergrad | Portfolio</title>
+  <meta name="description" content="Ahmed Moosani — AI Undergrad passionate about Machine Learning, Deep Learning, and Open Source. Explore my projects and get in touch." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+  <link rel="stylesheet" href="/src/styles/globals.css" />
+  <link rel="stylesheet" href="/src/styles/cursor.css" />
+  <link rel="stylesheet" href="/src/styles/menu.css" />
+  <link rel="stylesheet" href="/src/styles/hero.css" />
+  <link rel="stylesheet" href="/src/styles/about.css" />
+  <link rel="stylesheet" href="/src/styles/stack.css" />
+  <link rel="stylesheet" href="/src/styles/experience.css" />
+  <link rel="stylesheet" href="/src/styles/projects.css" />
+  <link rel="stylesheet" href="/src/styles/contact.css" />
+</head>
+<body>
+  <!-- Custom Cursor -->
+  <div class="cursor-dot" id="cursor-dot"></div>
+  <div class="cursor-ring" id="cursor-ring"></div>
+
+  <!-- Particles Background -->
+  <div id="particles-bg"></div>
+
+  <!-- Navigation -->
+  <nav class="nav" id="nav">
+    <div class="nav__logo">AM</div>
+    <button class="nav__hamburger" id="menu-toggle" aria-label="Toggle menu">
+      <span class="nav__hamburger-line"></span>
+      <span class="nav__hamburger-line"></span>
+    </button>
+  </nav>
+
+  <!-- Side Drawer Menu -->
+  <div class="menu-overlay" id="menu-overlay">
+    <div class="menu-overlay__backdrop" id="menu-backdrop"></div>
+    <div class="menu-overlay__drawer" id="menu-drawer">
+      <div class="menu-overlay__content">
+        <div class="menu-overlay__section">
+          <span class="menu-overlay__label">SOCIAL</span>
+          <a href="https://github.com/1234620" target="_blank" class="menu-overlay__link">Github</a>
+          <a href="https://linkedin.com/in/" target="_blank" class="menu-overlay__link">LinkedIn</a>
+          <a href="https://twitter.com/" target="_blank" class="menu-overlay__link">Twitter / X</a>
+        </div>
+        <div class="menu-overlay__section">
+          <span class="menu-overlay__label">MENU</span>
+          <a href="#hero" class="menu-overlay__link menu-overlay__link--nav" data-color="#f59e0b">Home</a>
+          <a href="#about" class="menu-overlay__link menu-overlay__link--nav" data-color="#6366f1">About Me</a>
+          <a href="#stack" class="menu-overlay__link menu-overlay__link--nav" data-color="#22c55e">Stack</a>
+          <a href="#experience" class="menu-overlay__link menu-overlay__link--nav" data-color="#ec4899">Experience</a>
+          <a href="#projects" class="menu-overlay__link menu-overlay__link--nav" data-color="#8b5cf6">Projects</a>
+        </div>
+        <div class="menu-overlay__footer">
+          <span class="menu-overlay__label">GET IN TOUCH</span>
+          <a href="mailto:amoosani123@gmail.com" class="menu-overlay__link">amoosani123@gmail.com</a>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Indigo Scrollbar Progress -->
+  <div class="scroll-progress" id="scroll-progress"></div>
+
+  <!-- ======== HERO ======== -->
+  <section class="hero" id="hero">
+    <div class="hero__content">
+      <div class="hero__text">
+        <h1 class="hero__title">
+          <span class="hero__title-line hero__title-line--accent">AI</span>
+          <span class="hero__title-line">UNDERGRAD</span>
+        </h1>
+        <p class="hero__bio">
+          Hi! I'm <strong>Ahmed Moosani</strong>. A passionate AI Undergrad focused on building intelligent systems, exploring machine learning, and contributing to open source.
+        </p>
+        <a href="#projects" class="hero__cta">VIEW MY WORK</a>
+      </div>
+      <div class="hero__stats">
+        <div class="hero__stat">
+          <span class="hero__stat-number" data-count="6">0</span><span class="hero__stat-plus">+</span>
+          <span class="hero__stat-label">Projects Built</span>
+        </div>
+        <div class="hero__stat">
+          <span class="hero__stat-number" data-count="3">0</span><span class="hero__stat-plus">+</span>
+          <span class="hero__stat-label">Years Coding</span>
+        </div>
+        <div class="hero__stat">
+          <span class="hero__stat-number" data-count="500">0</span><span class="hero__stat-plus">+</span>
+          <span class="hero__stat-label">Contributions</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ======== ABOUT ======== -->
+  <section class="about" id="about">
+    <div class="about__quote">
+      <p>I believe in harnessing the power of artificial intelligence to solve real-world problems, ensuring every project I build delivers meaningful impact.</p>
+    </div>
+    <div class="about__divider">
+      <span class="about__divider-text">This is me.</span>
+      <div class="about__divider-line"></div>
+    </div>
+    <div class="about__content">
+      <div class="about__heading">
+        <h2>Hi, I'm Ahmed.</h2>
+      </div>
+      <div class="about__description">
+        <p>I'm an AI undergrad dedicated to turning ideas into intelligent solutions. I specialize in machine learning, deep learning, and building scalable AI-powered applications.</p>
+        <p>My approach focuses on creating practical, high-impact solutions that bridge the gap between cutting-edge research and real-world applications. I'm passionate about computer vision, NLP, and making AI accessible through open source contributions.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ======== TECH STACK ======== -->
+  <section class="stack" id="stack">
+    <h2 class="stack__title">My Stack</h2>
+    <div class="stack__tabs">
+      <button class="stack__tab stack__tab--active" data-category="ai">AI / ML</button>
+      <button class="stack__tab" data-category="frontend">Frontend</button>
+      <button class="stack__tab" data-category="backend">Backend</button>
+      <button class="stack__tab" data-category="tools">Tools</button>
+    </div>
+    <div class="stack__grid" id="stack-grid">
+      <!-- AI / ML -->
+      <div class="stack__item" data-category="ai">
+        <div class="stack__icon">🐍</div>
+        <span class="stack__name">Python</span>
+      </div>
+      <div class="stack__item" data-category="ai">
+        <div class="stack__icon">🧠</div>
+        <span class="stack__name">TensorFlow</span>
+      </div>
+      <div class="stack__item" data-category="ai">
+        <div class="stack__icon">🔥</div>
+        <span class="stack__name">PyTorch</span>
+      </div>
+      <div class="stack__item" data-category="ai">
+        <div class="stack__icon">🤗</div>
+        <span class="stack__name">HuggingFace</span>
+      </div>
+      <div class="stack__item" data-category="ai">
+        <div class="stack__icon">📊</div>
+        <span class="stack__name">Scikit-learn</span>
+      </div>
+      <div class="stack__item" data-category="ai">
+        <div class="stack__icon">🦜</div>
+        <span class="stack__name">LangChain</span>
+      </div>
+      <div class="stack__item" data-category="ai">
+        <div class="stack__icon">👁️</div>
+        <span class="stack__name">OpenCV</span>
+      </div>
+      <div class="stack__item" data-category="ai">
+        <div class="stack__icon">📈</div>
+        <span class="stack__name">NumPy</span>
+      </div>
+      <!-- Frontend -->
+      <div class="stack__item stack__item--hidden" data-category="frontend">
+        <div class="stack__icon">⚛️</div>
+        <span class="stack__name">React</span>
+      </div>
+      <div class="stack__item stack__item--hidden" data-category="frontend">
+        <div class="stack__icon">🟨</div>
+        <span class="stack__name">JavaScript</span>
+      </div>
+      <div class="stack__item stack__item--hidden" data-category="frontend">
+        <div class="stack__icon">🔷</div>
+        <span class="stack__name">TypeScript</span>
+      </div>
+      <div class="stack__item stack__item--hidden" data-category="frontend">
+        <div class="stack__icon">🌐</div>
+        <span class="stack__name">HTML/CSS</span>
+      </div>
+      <div class="stack__item stack__item--hidden" data-category="frontend">
+        <div class="stack__icon">▲</div>
+        <span class="stack__name">Next.js</span>
+      </div>
+      <!-- Backend -->
+      <div class="stack__item stack__item--hidden" data-category="backend">
+        <div class="stack__icon">🟢</div>
+        <span class="stack__name">Node.js</span>
+      </div>
+      <div class="stack__item stack__item--hidden" data-category="backend">
+        <div class="stack__icon">🚀</div>
+        <span class="stack__name">FastAPI</span>
+      </div>
+      <div class="stack__item stack__item--hidden" data-category="backend">
+        <div class="stack__icon">🗄️</div>
+        <span class="stack__name">PostgreSQL</span>
+      </div>
+      <div class="stack__item stack__item--hidden" data-category="backend">
+        <div class="stack__icon">🍃</div>
+        <span class="stack__name">MongoDB</span>
+      </div>
+      <!-- Tools -->
+      <div class="stack__item stack__item--hidden" data-category="tools">
+        <div class="stack__icon">🐙</div>
+        <span class="stack__name">Git</span>
+      </div>
+      <div class="stack__item stack__item--hidden" data-category="tools">
+        <div class="stack__icon">🐳</div>
+        <span class="stack__name">Docker</span>
+      </div>
+      <div class="stack__item stack__item--hidden" data-category="tools">
+        <div class="stack__icon">🐧</div>
+        <span class="stack__name">Linux</span>
+      </div>
+      <div class="stack__item stack__item--hidden" data-category="tools">
+        <div class="stack__icon">☁️</div>
+        <span class="stack__name">AWS</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- ======== EXPERIENCE ======== -->
+  <section class="experience" id="experience">
+    <h2 class="experience__title">My Experience</h2>
+    <div class="experience__list">
+      <div class="experience__item">
+        <div class="experience__left">
+          <h3 class="experience__company">AI Research Projects</h3>
+          <span class="experience__role">AI / ML Developer</span>
+        </div>
+        <div class="experience__right">
+          <span class="experience__date">2023 — Present</span>
+        </div>
+      </div>
+      <div class="experience__item">
+        <div class="experience__left">
+          <h3 class="experience__company">Open Source Contributor</h3>
+          <span class="experience__role">Full Stack & AI</span>
+        </div>
+        <div class="experience__right">
+          <span class="experience__date">2022 — Present</span>
+        </div>
+      </div>
+      <div class="experience__item">
+        <div class="experience__left">
+          <h3 class="experience__company">University Projects</h3>
+          <span class="experience__role">AI Undergrad</span>
+        </div>
+        <div class="experience__right">
+          <span class="experience__date">2021 — Present</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ======== PROJECTS ======== -->
+  <section class="projects" id="projects">
+    <h2 class="projects__title">SELECTED PROJECTS</h2>
+    <div class="projects__list" id="projects-list">
+
+      <a href="https://github.com/1234620/DeepFake-Detection" target="_blank" class="projects__item">
+        <div class="projects__item-header">
+          <span class="projects__item-number">_01.</span>
+          <div class="projects__item-tags">
+            <span class="projects__tag">Python</span>
+            <span class="projects__tag">Deep Learning</span>
+            <span class="projects__tag">Computer Vision</span>
+          </div>
+        </div>
+        <h3 class="projects__item-name">DeepFake Detection</h3>
+        <p class="projects__item-desc">A web-based deepfake detection system that analyzes images and videos to determine if they contain deepfake content.</p>
+      </a>
+
+      <a href="https://github.com/1234620/AI-Powered-Resume-Builder-ATS-Optimization-Agent" target="_blank" class="projects__item">
+        <div class="projects__item-header">
+          <span class="projects__item-number">_02.</span>
+          <div class="projects__item-tags">
+            <span class="projects__tag">JavaScript</span>
+            <span class="projects__tag">AI Agent</span>
+            <span class="projects__tag">NLP</span>
+          </div>
+        </div>
+        <h3 class="projects__item-name">AI Resume Builder</h3>
+        <p class="projects__item-desc">An intelligent AI Agent that helps users create ATS-optimized resumes with professional formatting and enhanced readability.</p>
+      </a>
+
+      <a href="https://github.com/1234620/Real-Time-Suspicious-Object-Recognition-" target="_blank" class="projects__item">
+        <div class="projects__item-header">
+          <span class="projects__item-number">_03.</span>
+          <div class="projects__item-tags">
+            <span class="projects__tag">Python</span>
+            <span class="projects__tag">YOLOv8</span>
+            <span class="projects__tag">Computer Vision</span>
+          </div>
+        </div>
+        <h3 class="projects__item-name">Object Recognition</h3>
+        <p class="projects__item-desc">Real-time object detection using YOLOv8 with support for images, videos, and live camera feeds.</p>
+      </a>
+
+      <a href="https://github.com/1234620/Travel-Based-Chatbot" target="_blank" class="projects__item">
+        <div class="projects__item-header">
+          <span class="projects__item-number">_04.</span>
+          <div class="projects__item-tags">
+            <span class="projects__tag">TypeScript</span>
+            <span class="projects__tag">NLP</span>
+            <span class="projects__tag">Multi-Agent</span>
+          </div>
+        </div>
+        <h3 class="projects__item-name">Travel Chatbot</h3>
+        <p class="projects__item-desc">NLP-based multi-agent chatbot for flight search, hotel booking, and AI-powered itinerary generation.</p>
+      </a>
+
+      <a href="https://github.com/1234620/train-traffic-optimizer" target="_blank" class="projects__item">
+        <div class="projects__item-header">
+          <span class="projects__item-number">_05.</span>
+          <div class="projects__item-tags">
+            <span class="projects__tag">TypeScript</span>
+            <span class="projects__tag">AI</span>
+            <span class="projects__tag">Optimization</span>
+          </div>
+        </div>
+        <h3 class="projects__item-name">Train Traffic Optimizer</h3>
+        <p class="projects__item-desc">Advanced AI-Powered Railway Optimization Platform for scheduling and traffic management.</p>
+      </a>
+
+      <a href="https://github.com/1234620/chatbot-langchain-" target="_blank" class="projects__item">
+        <div class="projects__item-header">
+          <span class="projects__item-number">_06.</span>
+          <div class="projects__item-tags">
+            <span class="projects__tag">Python</span>
+            <span class="projects__tag">LangChain</span>
+            <span class="projects__tag">LLM</span>
+          </div>
+        </div>
+        <h3 class="projects__item-name">LangChain Chatbot</h3>
+        <p class="projects__item-desc">A chatbot powered by LangChain with conversational memory for contextual and persistent interactions.</p>
+      </a>
+
+    </div>
+  </section>
+
+  <!-- ======== CONTACT ======== -->
+  <section class="contact" id="contact">
+    <div class="contact__header">
+      <p class="contact__subtitle">Have a project in mind?</p>
+    </div>
+    <a href="mailto:amoosani123@gmail.com" class="contact__email">amoosani123@gmail.com</a>
+  </section>
+
+  <!-- ======== FOOTER ======== -->
+  <footer class="footer">
+    <p class="footer__text">Design & built by Ahmed Moosani</p>
+    <a href="https://github.com/1234620" target="_blank" class="footer__github">
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/></svg>
+    </a>
+  </footer>
+
+  <script type="module" src="/src/main.js"></script>
+</body>
+</html>

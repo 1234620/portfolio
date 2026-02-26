@@ -1,0 +1,148 @@
+# Ahmed Moosani — Portfolio Website
+
+Build a premium dark portfolio website inspired by [tajmirul.site](https://www.tajmirul.site/), customized for Ahmed Moosani (AI Undergrad). Single-page, scroll-driven, with GSAP animations and a striking dark aesthetic.
+
+## Reference Screenshots
+
+````carousel
+![Hero & Navigation — tajmirul.site reference showing massive uppercase "FRONTEND DEVELOPER" text, particle background, and hamburger menu](/Users/ahmedmoosani/.gemini/antigravity/brain/0ca9d68b-b3b2-4c54-a001-640a97cbe5d4/hero_section_initial_1772009311665.png)
+<!-- slide -->
+![Side Drawer Navigation — Social links (GitHub, LinkedIn) on left, Menu links with colored dots on right, "GET IN TOUCH" email at bottom](/Users/ahmedmoosani/.gemini/antigravity/brain/0ca9d68b-b3b2-4c54-a001-640a97cbe5d4/navigation_menu_overlay_1772009686132.png)
+<!-- slide -->
+![About Section — Large philosophical quote, "Hi, I'm Tajmirul" with two-column bio layout](/Users/ahmedmoosani/.gemini/antigravity/brain/0ca9d68b-b3b2-4c54-a001-640a97cbe5d4/about_me_section_details_1772009885131.png)
+````
+
+---
+
+## Tech Stack
+
+| Category | Technology | Why |
+|----------|-----------|-----|
+| **Build** | Vite | Fast dev server, instant HMR |
+| **Language** | Vanilla JS + HTML | Lightweight, no framework overhead |
+| **Animations** | GSAP + ScrollTrigger | Industry-standard scroll animations |
+| **Particles** | tsParticles (lightweight) | Animated star-field background |
+| **Styling** | Vanilla CSS | Full control, CSS custom properties |
+| **Font** | Inter (Google Fonts) | Clean modern sans-serif |
+| **Deployment** | GitHub Pages (later) | Free hosting |
+
+---
+
+## Project Structure
+
+```
+trying(Potfolio)/
+├── index.html
+├── package.json
+├── vite.config.js
+├── public/
+│   └── favicon.svg
+├── src/
+│   ├── main.js              # Entry point, GSAP init
+│   ├── cursor.js             # Custom cursor logic
+│   ├── particles.js          # Particle background config
+│   ├── menu.js               # Hamburger drawer toggle
+│   ├── animations.js         # All GSAP/ScrollTrigger anims
+│   └── styles/
+│       ├── globals.css       # Reset, variables, typography
+│       ├── hero.css          # Hero section
+│       ├── about.css         # About section
+│       ├── stack.css         # Tech stack grid
+│       ├── experience.css    # Experience timeline
+│       ├── projects.css      # Projects list
+│       ├── contact.css       # Contact / footer
+│       ├── menu.css          # Side drawer overlay
+│       └── cursor.css        # Custom cursor styles
+```
+
+---
+
+## Section-by-Section Design (Adapting tajmirul.site → Ahmed Moosani)
+
+### 1. Custom Cursor
+- Replace default cursor with a **small white dot** + outer ring that expands on hover over interactive elements
+- Triangle cursor like tajmirul is cool but a dot+ring is more polished and universally appealing
+
+### 2. Navigation
+- **Hamburger icon** (two horizontal lines) fixed top-right
+- On click → **right-side drawer overlay** slides in with:
+  - **SOCIAL** column: GitHub, LinkedIn, Twitter/X
+  - **MENU** column: Home, About, Stack, Experience, Projects (with colored dots like reference)
+  - **GET IN TOUCH**: email link at bottom
+- Page content shifts/dims behind the drawer
+
+### 3. Hero Section
+- **Massive uppercase heading**: "AI" in indigo (#6366f1), "UNDERGRAD" in white — stacked, full-width
+- Below: "Hi! I'm **Ahmed Moosani**. A creative AI Undergrad passionate about building intelligent systems, contributing to open source, and exploring machine learning."
+- **CTA button**: "HIRE ME" or "VIEW WORK" in filled indigo
+- **Right side stats**: "4+ Projects", "500+ Contributions", "3+ Years Coding" — vertically stacked
+- **Particle star-field background** — subtle animated dots floating
+- Custom colored **scrollbar accent** (indigo instead of green)
+
+### 4. About Section
+- Large philosophical quote (full-width, massive font): *"I believe in harnessing AI to solve real-world problems, ensuring every project delivers meaningful impact."*
+- Separator: "This is me." text + horizontal line
+- **Two-column layout**: "Hi, I'm Ahmed." (bold, left) + two paragraphs describing approach (muted gray, right)
+- Text reveals on scroll via GSAP
+
+### 5. Tech Stack Section
+- Header: "My Stack"
+- **Filter tabs**: AI/ML, Frontend, Backend, Tools
+- **Icon grid**: Large icons for Python, TensorFlow, PyTorch, React, JavaScript, Docker, Git, Linux, etc.
+- Icons fade/stagger in on scroll
+
+### 6. Experience Section
+- Header: "My Experience"
+- **List layout** (similar to reference): Company name, role, dates — each row with clean separator
+- Scroll-triggered reveal
+
+### 7. Selected Projects Section
+- Header: "SELECTED PROJECTS"
+- **Numbered project list** (like reference): `_01.`, `_02.`, etc.
+- Each row: project number + tech tags on top, large project name below
+- **Key interaction**: Hovering one project **dims all others** to ~30% opacity — creates a cinematic focus effect
+- Projects: DeepFake Detection, Travel Chatbot, Object Recognition, LangChain Chatbot
+
+### 8. Contact / Footer
+- "Have a project in mind?"
+- Large clickable email: **ahmedmoosani@email.com** (or your real email)
+- Footer: "Design & built by Ahmed Moosani" + GitHub link
+
+---
+
+## Animation Strategy (GSAP + ScrollTrigger)
+
+| Element | Animation | Trigger |
+|---------|-----------|---------|
+| Hero heading | Split-text reveal, letters animate up | Page load |
+| Hero stats | Fade up + stagger | Page load (delayed) |
+| Particles | Continuous float | Always active |
+| About quote | Fade in from bottom | Scroll into view |
+| About bio | Slide up | Scroll into view |
+| Stack icons | Stagger fade-in | Scroll into view |
+| Experience rows | Slide in from left | Scroll into view |
+| Project rows | Slide up + stagger | Scroll into view |
+| Project hover | Others dim to 30% | Mouse hover |
+| Contact email | Scale up | Scroll into view |
+| Custom cursor | Follow mouse, expand on hover | Always active |
+
+---
+
+## Verification Plan
+
+### Automated
+```bash
+npm run build   # Verify production build completes without errors
+```
+
+### Browser Testing
+- Open dev server in browser, scroll through all sections
+- Verify all GSAP animations trigger correctly on scroll
+- Test hamburger menu open/close with slide animation
+- Test custom cursor on hover states
+- Test project list dimming hover effect
+- Test responsive layout at mobile (375px), tablet (768px), desktop (1440px)
+- Lighthouse performance audit (target 90+)
+
+### Manual Testing
+- User reviews the live site and confirms overall look & feel matches tajmirul.site style
