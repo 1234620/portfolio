@@ -17,7 +17,7 @@
 
 export async function initParticles() {
   try {
-    const { tsParticles } = await import('tsparticles');
+    const { tsParticles } = await import('@tsparticles/engine');
     const { loadSlim } = await import('@tsparticles/slim');
 
     await loadSlim(tsParticles);
@@ -73,10 +73,10 @@ export async function initParticles() {
 
           move: {
             enable: true,
-            speed: { min: 0.5, max: 1.8 },
+            speed: { min: 0.2, max: 0.7 },
             direction: 'bottom',
             random: false,
-            straight: false,
+            straight: true,
             outModes: {
               default: 'out',
               bottom: 'out',
@@ -84,8 +84,7 @@ export async function initParticles() {
               left: 'out',
               right: 'out',
             },
-            // Horizontal wobble — makes it feel like real snow
-            drift: { min: -0.5, max: 0.5 },
+            drift: 0,
             attract: {
               enable: false,
             },
@@ -102,11 +101,8 @@ export async function initParticles() {
             },
           },
 
-          // Slight wobble on the path
           wobble: {
-            enable: true,
-            distance: 8,
-            speed: 4,
+            enable: false,
           },
 
           links: {
@@ -143,7 +139,7 @@ export async function initParticles() {
             options: {
               particles: {
                 number: { value: 50 },
-                move: { speed: { min: 0.3, max: 1 } },
+                move: { speed: { min: 0.1, max: 0.4 } },
                 size: { value: { min: 0.8, max: 2.5 } },
               },
               interactivity: {

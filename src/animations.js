@@ -146,6 +146,21 @@ function aboutAnimations() {
     );
   }
 
+  // Photo reveal (reversible)
+  const photoWrapper = document.querySelector('.about__photo-wrapper');
+  if (photoWrapper) {
+    gsap.to(photoWrapper, {
+      y: 0,
+      opacity: 1,
+      duration: 1,
+      ease: EASE_SMOOTH,
+      scrollTrigger: {
+        trigger: '.about__content',
+        ...SCROLL_DEFAULTS,
+      },
+    });
+  }
+
   // "Hi, I'm Ahmed" heading (reversible)
   const aboutHeading = document.querySelector('.about__heading h2');
   if (aboutHeading) {
