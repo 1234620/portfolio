@@ -21,12 +21,14 @@ import './styles/stack.css';
 import './styles/experience.css';
 import './styles/projects.css';
 import './styles/contact.css';
+import './styles/cat.css';
 
 /* ── Modules ─────────────────────────────────────────── */
 import { initCursor } from './cursor.js';
 import { initParticles } from './particles.js';
 import { initMenu, initStackFilter, initScrollProgress } from './menu.js';
 import { initAnimations } from './animations.js';
+import { initCat } from './cat.js';
 
 /* ── Bootstrap ───────────────────────────────────────── */
 document.addEventListener('DOMContentLoaded', () => {
@@ -43,4 +45,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
   // GSAP animations — hero plays immediately, others on scroll
   initAnimations();
+
+  // Peeking cat with cursor-tracking eyes
+  initCat();
 });

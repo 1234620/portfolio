@@ -1,15 +1,14 @@
 /**
  * Animations Module — GSAP + ScrollTrigger
  * ------------------------------------------
- * Premium scroll-driven animations matching the tajmirul.site feel.
+ * Snappy scroll-driven animations.
  *
- * KEY BEHAVIOR:
- *  • Scroll DOWN → animations play forward (elements reveal)
- *  • Scroll UP   → animations play in REVERSE (elements hide back)
- *  • Achieved via `toggleActions: 'play reverse play reverse'`
- *
- *  HERO — plays on page load (no scroll trigger, no reverse)
- *  ALL OTHER SECTIONS — reverse on scroll-back
+ * KEY CHANGES from v1:
+ *  • toggleActions: 'play none none none' — once revealed, stays shown
+ *    (no more janky reverse on scroll-back)
+ *  • Triggers fire at 'top 92%' — almost immediately when element enters viewport
+ *  • Shorter durations (0.4-0.6s) for snappy feedback
+ *  • Reduced stagger values for tighter choreography
  */
 
 import gsap from 'gsap';
@@ -22,11 +21,10 @@ const EASE_SMOOTH = 'power3.out';
 const EASE_HEAVY = 'power4.out';
 const EASE_ELASTIC = 'back.out(1.4)';
 
-// Shared ScrollTrigger config for reversible animations
+// Shared ScrollTrigger config — fires early, plays once
 const SCROLL_DEFAULTS = {
-  start: 'top 85%',
-  end: 'top 20%',
-  toggleActions: 'play reverse play reverse',
+  start: 'top 92%',
+  toggleActions: 'play none none none',
 };
 
 export function initAnimations() {
@@ -40,7 +38,7 @@ export function initAnimations() {
 
 
 /* ═══════════════════════════════════════════════════════
-   HERO — on page load (no reverse — always visible at top)
+   HERO — on page load
    ═══════════════════════════════════════════════════════ */
 
 function heroAnimations() {
@@ -50,62 +48,62 @@ function heroAnimations() {
   tl.to(titleLines, {
     y: 0,
     opacity: 1,
-    duration: 1.2,
-    stagger: 0.18,
-  }, 0.3);
+    duration: 0.9,
+    stagger: 0.12,
+  }, 0.2);
 
   tl.to('.hero__bio', {
     y: 0,
     opacity: 1,
-    duration: 0.9,
+    duration: 0.6,
     ease: EASE_SMOOTH,
-  }, 0.9);
+  }, 0.6);
 
   tl.to('.hero__cta', {
     y: 0,
     opacity: 1,
-    duration: 0.7,
+    duration: 0.5,
     ease: EASE_ELASTIC,
-  }, 1.1);
+  }, 0.8);
 
   const stats = document.querySelectorAll('.hero__stat');
   tl.to(stats, {
     x: 0,
     opacity: 1,
-    duration: 0.8,
-    stagger: 0.15,
+    duration: 0.5,
+    stagger: 0.1,
     ease: EASE_SMOOTH,
-  }, 1.0);
+  }, 0.7);
 
-  // Animated number counters (odometer effect)
+  // Animated number counters
   const counters = document.querySelectorAll('.hero__stat-number[data-count]');
   counters.forEach((counter) => {
     const target = parseInt(counter.dataset.count, 10);
     const obj = { val: 0 };
     tl.to(obj, {
       val: target,
-      duration: 2,
+      duration: 1.5,
       ease: 'power2.out',
       onUpdate() {
         counter.textContent = Math.round(obj.val);
       },
-    }, 1.2);
+    }, 0.9);
   });
 }
 
 
 /* ═══════════════════════════════════════════════════════
-   ABOUT — reversible scroll animations
+   ABOUT
    ═══════════════════════════════════════════════════════ */
 
 function aboutAnimations() {
-  // Quote — word-by-word stagger (reversible timeline)
+  // Quote — word-by-word stagger
   const quoteParagraph = document.querySelector('.about__quote p');
   if (quoteParagraph) {
     const text = quoteParagraph.textContent.trim();
     const words = text.split(/\s+/);
     quoteParagraph.innerHTML = words
-      .map((w) => `<span class="word" style="display:inline-block;opacity:0;transform:translateY(18px)">${w}&nbsp;</span>`)
+      .map((w) => `<span class="word" style="display:inline-block;opacity:0;transform:translateY(14px)">${w}&nbsp;</span>`)
       .join('');
 
     const wordSpans = quoteParagraph.querySelectorAll('.word');
@@ -113,9 +111,7 @@ function aboutAnimations() {
     const quoteTl = gsap.timeline({
       scrollTrigger: {
         trigger: '.about__quote',
-        start: 'top 82%',
-        end: 'top 15%',
-        toggleActions: 'play reverse play reverse',
+        ...SCROLL_DEFAULTS,
       },
     });
 
@@ -123,20 +119,20 @@ function aboutAnimations() {
     quoteTl.to(wordSpans, {
       y: 0,
       opacity: 1,
-      duration: 0.4,
-      stagger: 0.03,
+      duration: 0.3,
+      stagger: 0.02,
       ease: EASE_SMOOTH,
     });
   }
 
-  // Divider line — grow from left (reversible)
+  // Divider line — grow from left
   const dividerLine = document.querySelector('.about__divider-line');
   if (dividerLine) {
     gsap.fromTo(dividerLine,
       { scaleX: 0, transformOrigin: 'left center' },
       {
         scaleX: 1,
-        duration: 1.2,
+        duration: 0.8,
         ease: EASE_SMOOTH,
         scrollTrigger: {
           trigger: '.about__divider',
@@ -146,13 +142,13 @@ function aboutAnimations() {
     );
   }
 
-  // Photo reveal (reversible)
+  // Photo reveal
   const photoWrapper = document.querySelector('.about__photo-wrapper');
   if (photoWrapper) {
     gsap.to(photoWrapper, {
       y: 0,
       opacity: 1,
-      duration: 1,
+      duration: 0.6,
       ease: EASE_SMOOTH,
       scrollTrigger: {
         trigger: '.about__content',
@@ -161,13 +157,13 @@ function aboutAnimations() {
     });
   }
 
-  // "Hi, I'm Ahmed" heading (reversible)
+  // "Hi, I'm Ahmed" heading
   const aboutHeading = document.querySelector('.about__heading h2');
   if (aboutHeading) {
     gsap.to(aboutHeading, {
       y: 0,
       opacity: 1,
-      duration: 0.9,
+      duration: 0.5,
       ease: EASE_SMOOTH,
       scrollTrigger: {
         trigger: '.about__content',
@@ -176,7 +172,7 @@ function aboutAnimations() {
     });
   }
 
-  // Description paragraphs (reversible)
+  // Description paragraphs
   const descParagraphs = document.querySelectorAll('.about__description p');
   if (descParagraphs.length) {
     const descTl = gsap.timeline({
@@ -188,8 +184,8 @@ function aboutAnimations() {
     descTl.to(descParagraphs, {
       y: 0,
       opacity: 1,
-      duration: 0.8,
-      stagger: 0.2,
+      duration: 0.5,
+      stagger: 0.12,
       ease: EASE_SMOOTH,
     });
   }
@@ -197,7 +193,7 @@ function aboutAnimations() {
 
 
 /* ═══════════════════════════════════════════════════════
-   TECH STACK — reversible
+   TECH STACK
    ═══════════════════════════════════════════════════════ */
 
 function stackAnimations() {
@@ -206,13 +202,11 @@ function stackAnimations() {
     gsap.to(stackTitle, {
       y: 0,
       opacity: 1,
-      duration: 0.8,
+      duration: 0.5,
       ease: EASE_SMOOTH,
       scrollTrigger: {
         trigger: stackTitle,
-        start: 'top 88%',
-        end: 'top 20%',
-        toggleActions: 'play reverse play reverse',
+        ...SCROLL_DEFAULTS,
       },
     });
   }
@@ -228,8 +222,8 @@ function stackAnimations() {
     stackTl.to(stackItems, {
       y: 0,
       opacity: 1,
-      duration: 0.5,
-      stagger: { each: 0.06, from: 'start' },
+      duration: 0.35,
+      stagger: { each: 0.04, from: 'start' },
       ease: EASE_SMOOTH,
     });
   }
@@ -237,7 +231,7 @@ function stackAnimations() {
 
 
 /* ═══════════════════════════════════════════════════════
-   EXPERIENCE — reversible
+   EXPERIENCE
    ═══════════════════════════════════════════════════════ */
 
 function experienceAnimations() {
@@ -246,38 +240,37 @@ function experienceAnimations() {
     gsap.to(expTitle, {
       y: 0,
       opacity: 1,
-      duration: 0.8,
+      duration: 0.5,
       ease: EASE_SMOOTH,
       scrollTrigger: {
         trigger: expTitle,
-        start: 'top 88%',
-        end: 'top 20%',
-        toggleActions: 'play reverse play reverse',
+        ...SCROLL_DEFAULTS,
       },
     });
   }
 
+  // Batch all items in one timeline instead of individual triggers
   const expItems = document.querySelectorAll('.experience__item');
-  expItems.forEach((item, i) => {
-    gsap.to(item, {
-      x: 0,
-      opacity: 1,
-      duration: 0.8,
-      delay: i * 0.1,
-      ease: EASE_SMOOTH,
+  if (expItems.length) {
+    const expTl = gsap.timeline({
       scrollTrigger: {
-        trigger: item,
-        start: 'top 88%',
-        end: 'top 20%',
-        toggleActions: 'play reverse play reverse',
+        trigger: '.experience__list',
+        ...SCROLL_DEFAULTS,
       },
     });
-  });
+    expTl.to(expItems, {
+      x: 0,
+      opacity: 1,
+      duration: 0.5,
+      stagger: 0.08,
+      ease: EASE_SMOOTH,
+    });
+  }
 }
 
 
 /* ═══════════════════════════════════════════════════════
-   PROJECTS — reversible (manages .revealed class)
+   PROJECTS
    ═══════════════════════════════════════════════════════ */
 
 function projectAnimations() {
@@ -286,41 +279,40 @@ function projectAnimations() {
     gsap.to(projTitle, {
       y: 0,
       opacity: 1,
-      duration: 0.8,
+      duration: 0.5,
       ease: EASE_SMOOTH,
       scrollTrigger: {
         trigger: projTitle,
-        start: 'top 88%',
-        end: 'top 20%',
-        toggleActions: 'play reverse play reverse',
+        ...SCROLL_DEFAULTS,
       },
     });
   }
 
+  // Batch all project items into one timeline for snappier load
   const projectItems = document.querySelectorAll('.projects__item');
-  projectItems.forEach((item, i) => {
-    gsap.to(item, {
-      y: 0,
-      opacity: 1,
-      duration: 0.7,
-      delay: i * 0.08,
-      ease: EASE_SMOOTH,
+  if (projectItems.length) {
+    const projTl = gsap.timeline({
       scrollTrigger: {
-        trigger: item,
-        start: 'top 90%',
-        end: 'top 15%',
-        toggleActions: 'play reverse play reverse',
-        onEnter: () => item.classList.add('revealed'),
-        onLeaveBack: () => item.classList.remove('revealed'),
-        onEnterBack: () => item.classList.add('revealed'),
+        trigger: '.projects__list',
+        ...SCROLL_DEFAULTS,
       },
     });
-  });
+    projTl.to(projectItems, {
+      y: 0,
+      opacity: 1,
+      duration: 0.45,
+      stagger: 0.06,
+      ease: EASE_SMOOTH,
+      onStart() {
+        projectItems.forEach((item) => item.classList.add('revealed'));
+      },
+    });
+  }
 }
 
 
 /* ═══════════════════════════════════════════════════════
-   CONTACT — reversible
+   CONTACT
    ═══════════════════════════════════════════════════════ */
 
 function contactAnimations() {
@@ -329,13 +321,11 @@ function contactAnimations() {
     gsap.to(subtitle, {
       y: 0,
       opacity: 1,
-      duration: 0.8,
+      duration: 0.5,
       ease: EASE_SMOOTH,
       scrollTrigger: {
         trigger: subtitle,
-        start: 'top 88%',
-        end: 'top 20%',
-        toggleActions: 'play reverse play reverse',
+        ...SCROLL_DEFAULTS,
       },
     });
   }
@@ -345,13 +335,11 @@ function contactAnimations() {
     gsap.to(email, {
       y: 0,
       opacity: 1,
-      duration: 0.9,
+      duration: 0.6,
       ease: EASE_ELASTIC,
       scrollTrigger: {
         trigger: email,
-        start: 'top 90%',
-        end: 'top 20%',
-        toggleActions: 'play reverse play reverse',
+        ...SCROLL_DEFAULTS,
       },
     });
   }
